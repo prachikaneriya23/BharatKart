@@ -104,7 +104,7 @@ def _seed_products_for_shop(session, shop_id: int) -> None:
             "mrp": Decimal("1299.00"),
             "rating": Decimal("4.85"),
             "is_featured": True,
-            "image_url": "https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=800&q=85",
+            "image_url": "https://images.unsplash.com/photo-1577083753695-e010191bacb5?auto=format&fit=crop&w=800&q=85",
             "stock": 25,
             "variants": [
                 {"variant_name": "Finish", "variant_value": "Antique Gold", "price_adjustment": Decimal("0.00"), "stock_quantity": 15},

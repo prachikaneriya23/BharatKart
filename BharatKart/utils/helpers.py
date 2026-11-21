@@ -35,7 +35,7 @@ SHOP_COVER_PHOTOS: dict[str, str] = {
     "SHP-IXE401": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1200&q=85",  # Aranya Botanical Apothecary
     "SHP-IXE402": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1200&q=85",  # Canara Coastal Crafts & Bamboo Studio
     "SHP-IXE403": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=85",  # Kudla Coastal Handlooms
-    "SHP-IXE404": "https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=1200&q=85",  # Pilikutla Heritage Bell Metal
+    "SHP-IXE404": "https://images.unsplash.com/photo-1763475945419-20e68c88c05b?auto=format&fit=crop&w=1200&q=85",  # Pilikutla Heritage Bell Metal & Woodcraft Studio
     "SHP-IXE405": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=1200&q=85",  # Gerosa Audio & ElectroTech
 }
 
@@ -97,7 +97,7 @@ REAL_PRODUCT_PHOTOS: dict[str, str] = {
     "BK-PNQ-STN02": "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=800&q=85",
     # Mangalore - Canara Coastal Crafts & Bamboo Studio
     "BK-CAN-001": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=85",
-    "BK-CAN-002": "https://images.unsplash.com/photo-1595079672139-5470805086ae?auto=format&fit=crop&w=800&q=85",
+    "BK-CAN-002": "https://images.unsplash.com/photo-1783024865247-d775f6b0b41b?auto=format&fit=crop&w=800&q=85",
     "BK-CAN-003": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800&q=85",
     "BK-CAN-004": "https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?auto=format&fit=crop&w=800&q=85",
     # Mangalore - Kudla Coastal Handlooms & Silk (Authentic Saree Specialists)
@@ -105,9 +105,9 @@ REAL_PRODUCT_PHOTOS: dict[str, str] = {
     "BK-IXE-FSH02": "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=85",
     "BK-IXE-FSH03": "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=800&q=85",
     # Mangalore - Pilikutla Heritage Bell Metal & Woodcraft
-    "BK-KBL-001": "https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=800&q=85",
-    "BK-KBL-002": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=85",
-    "BK-KBL-003": "https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=800&q=85",
+    "BK-KBL-001": "https://images.unsplash.com/photo-1775427527606-5b317b5e6a96?auto=format&fit=crop&w=800&q=85",
+    "BK-KBL-002": "https://images.unsplash.com/photo-1680169264943-7565ea62d07c?auto=format&fit=crop&w=800&q=85",
+    "BK-KBL-003": "https://images.unsplash.com/photo-1593810451410-8fbb422cc15e?auto=format&fit=crop&w=800&q=85",
     # Mangalore - Gerosa Audio & ElectroTech
     "BK-IXE-ELC01": "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=800&q=85",
     "BK-IXE-ELC02": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=800&q=85",
@@ -117,6 +117,8 @@ REAL_PRODUCT_PHOTOS: dict[str, str] = {
     # Mumbai - Bombay Heritage Brass & Lighting Studio
     "BK-LGT-001": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=85",
     "BK-LGT-002": "https://images.unsplash.com/photo-1540932239986-30128078f3c5?auto=format&fit=crop&w=800&q=85",
+    # Vedic Crafts
+    "BK-SHP17-001": "https://images.unsplash.com/photo-1577083753695-e010191bacb5?auto=format&fit=crop&w=800&q=85",
 }
 
 # Accurate multi-angle product photograph galleries for PDP gallery inspection
@@ -171,6 +173,26 @@ PRODUCT_GALLERIES: dict[str, list[str]] = {
     "BK-TER-001": [
         "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=800&q=85",
         "https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&w=800&q=85",
+    ],
+    # Traditional Karavali Bell Metal Temple Lamp (Kuthu Vilakku)
+    "BK-KBL-001": [
+        "https://images.unsplash.com/photo-1775427527606-5b317b5e6a96?auto=format&fit=crop&w=800&q=85",
+        "https://images.unsplash.com/photo-1577083753695-e010191bacb5?auto=format&fit=crop&w=800&q=85",
+    ],
+    # Hand-Carved Teakwood Yakshagana Cultural Wall Mask
+    "BK-KBL-002": [
+        "https://images.unsplash.com/photo-1680169264943-7565ea62d07c?auto=format&fit=crop&w=800&q=85",
+        "https://images.unsplash.com/photo-1603728453735-76d646cf7e1e?auto=format&fit=crop&w=800&q=85",
+    ],
+    # Cast Bronze Singing Healing Meditation Bowl with Mallet
+    "BK-KBL-003": [
+        "https://images.unsplash.com/photo-1593810451410-8fbb422cc15e?auto=format&fit=crop&w=800&q=85",
+        "https://images.unsplash.com/photo-1700423523690-8324bccc3257?auto=format&fit=crop&w=800&q=85",
+    ],
+    # Handwoven Coastal Golden Cane & Bamboo Fruit Basket
+    "BK-CAN-002": [
+        "https://images.unsplash.com/photo-1783024865247-d775f6b0b41b?auto=format&fit=crop&w=800&q=85",
+        "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=85",
     ],
 }
 

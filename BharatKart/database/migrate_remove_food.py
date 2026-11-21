@@ -217,7 +217,7 @@ try:
                     "mrp": Decimal("600.00"),
                     "rating": Decimal("4.76"),
                     "is_featured": False,
-                    "image_url": "https://images.unsplash.com/photo-1595079672139-5470805086ae?auto=format&fit=crop&w=800&q=85",
+                    "image_url": "https://images.unsplash.com/photo-1783024865247-d775f6b0b41b?auto=format&fit=crop&w=800&q=85",
                     "stock": 35,
                 },
                 {

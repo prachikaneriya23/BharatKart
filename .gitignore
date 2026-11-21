@@ -1,5 +1,23 @@
-# Python
+# Environment variables & secrets — NEVER commit secrets
+.env
+.env.*
+*.env
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Certificates & Keys — NEVER commit credentials
+certificates/
+**/certificates/
+*.pem
+*.key
+*.crt
+*.cer
+
+# Python & Caches
 __pycache__/
+**/__pycache__/
 *.py[cod]
 *$py.class
 *.so
@@ -7,45 +25,44 @@ __pycache__/
 dist/
 build/
 *.egg
+*.pyc
 
 # Virtual environments
 venv/
 .venv/
 env/
+**/venv/
+**/.venv/
 
-# Environment variables — NEVER commit secrets
-.env
-*.env
+# Streamlit secrets
+.streamlit/secrets.toml
+**/.streamlit/secrets.toml
 
-# IDE
+# Local database files & sqlite
+*.db
+*.sqlite
+*.sqlite3
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+
+# IDE & Editor files
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# OS
+# OS files
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Streamlit
-.streamlit/secrets.toml
-
-# SQLite fallback DB (if used locally)
-*.db
-*.sqlite3
-
-# Certificates — NEVER commit secrets
-certificates/
-
-# Pytest / Coverage
+# Testing & Coverage
 .pytest_cache/
 htmlcov/
 .coverage
 coverage.xml
 
-# Backup copy
+# Project Backup Directories
 BharatKart_backup/
-
-# Byte-compiled
-*.pyc
+BharatKart (2)/
