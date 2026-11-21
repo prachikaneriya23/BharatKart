@@ -99,7 +99,8 @@ def render_header() -> CityDTO:
         unsafe_allow_html=True,
     )
 
-    col_brand, col_city, col_nav = st.columns([1.6, 2.0, 6.4], vertical_alignment="center")
+    # ── Brand row ──────────────────────────────────────────────────
+    col_brand, col_city = st.columns([2.2, 2.4], vertical_alignment="center")
 
     with col_brand:
         st.markdown(
@@ -128,54 +129,45 @@ def render_header() -> CityDTO:
                 st.session_state.pending_city_id = None
                 st.rerun()
 
-    with col_nav:
-        if not user:
-            # Unauthenticated state
-            _, c_auth = st.columns([4, 2])
-            with c_auth:
-                if st.button("🔐 Sign In / Register", use_container_width=True, type="primary"):
-                    navigate_to("CustomerRegister")
+    # ── Navigation row (full width, evenly spaced) ───────────────
+    if not user:
+        _, c_auth = st.columns([5, 1.5])
+        with c_auth:
+            if st.button("🔐 Sign In / Register", use_container_width=True, type="primary"):
+                navigate_to("CustomerRegister")
+    else:
+        nav_cols = st.columns(8, gap="small")
+        nav_items = [
+            ("Home", "Home"),
+            ("Catalogue", "Catalogue"),
+            ("Shops", "Shops"),
+            ("AI Assistant", "Assistant"),
+        ]
+        # Role-specific 5th button
+        if user.role == "seller":
+            nav_items.append(("My Store", "SellerPortal"))
+        elif user.role == "admin":
+            nav_items.append(("Operations", "Operations"))
         else:
-            # Authenticated state
-            n1, n2, n3, n4, n5, n6, n7, n8 = st.columns([0.8, 1.0, 0.95, 1.25, 1.15, 0.95, 0.95, 0.95])
-            with n1:
-                if st.button("Home", use_container_width=True, type="primary" if st.session_state.active_page == "Home" else "secondary"):
-                    navigate_to("Home")
-            with n2:
-                if st.button("Catalogue", use_container_width=True, type="primary" if st.session_state.active_page == "Catalogue" else "secondary"):
-                    navigate_to("Catalogue")
-            with n3:
-                if st.button("Shops", use_container_width=True, type="primary" if st.session_state.active_page == "Shops" else "secondary"):
-                    navigate_to("Shops")
-            with n4:
-                if st.button("AI Assistant", use_container_width=True, type="primary" if st.session_state.active_page == "Assistant" else "secondary"):
-                    navigate_to("Assistant")
-            with n5:
-                if user.role == "seller":
-                    if st.button("My Store", use_container_width=True, type="primary" if st.session_state.active_page == "SellerPortal" else "secondary"):
-                        navigate_to("SellerPortal")
-                elif user.role == "admin":
-                    if st.button("Operations", use_container_width=True, type="primary" if st.session_state.active_page == "Operations" else "secondary"):
-                        navigate_to("Operations")
-                else:
-                    if st.button("My Orders", use_container_width=True, type="primary" if st.session_state.active_page == "CustomerRegister" else "secondary"):
-                        navigate_to("CustomerRegister")
-            with n6:
-                cart_label = f"Bag ({total_cart_units})" if total_cart_units > 0 else "Bag"
-                if st.button(cart_label, use_container_width=True, type="primary" if st.session_state.active_page == "Cart" else "secondary"):
-                    navigate_to("Cart")
-            with n7:
-                acc_label = f"👤 {user.full_name.split()[0]}"
-                if st.button(acc_label, use_container_width=True, type="primary" if st.session_state.active_page == "CustomerRegister" else "secondary"):
-                    navigate_to("CustomerRegister")
-            with n8:
-                if st.button("Log Out", key="nav_logout_btn", use_container_width=True, type="secondary"):
-                    st.session_state.current_user = None
-                    st.session_state.registered_customer = None
-                    st.session_state.cart = {}
-                    st.session_state.checkout_idempotency_key = None
-                    st.session_state.active_page = "Home"
-                    st.rerun()
+            nav_items.append(("My Orders", "CustomerRegister"))
+
+        cart_label = f"Bag ({total_cart_units})" if total_cart_units > 0 else "Bag"
+        nav_items.append((cart_label, "Cart"))
+        nav_items.append((f"👤 {user.full_name.split()[0]}", "CustomerRegister"))
+
+        for idx, (label, page) in enumerate(nav_items):
+            with nav_cols[idx]:
+                is_active = st.session_state.active_page == page
+                if st.button(label, use_container_width=True, type="primary" if is_active else "secondary", key=f"nav_{page}_{idx}"):
+                    navigate_to(page)
+        with nav_cols[7]:
+            if st.button("Log Out", key="nav_logout_btn", use_container_width=True, type="secondary"):
+                st.session_state.current_user = None
+                st.session_state.registered_customer = None
+                st.session_state.cart = {}
+                st.session_state.checkout_idempotency_key = None
+                st.session_state.active_page = "Home"
+                st.rerun()
 
     if st.session_state.pending_city_id is not None:
         target_city = city_by_id[st.session_state.pending_city_id]
