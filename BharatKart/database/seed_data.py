@@ -18,24 +18,24 @@ CITIES = [
 PARTNER_SHOPS = [
     {
         "shop_code": "SHP-BLR101",
-        "shop_name": "Malnad Roasters & Estate Co.",
+        "shop_name": "Malnad Craft & Woodwork Co.",
         "owner_name": "Rohan Hegde",
-        "owner_email": "rohan@malnadroasters.in",
+        "owner_email": "rohan@malnadcraft.in",
         "owner_phone": "9845011223",
         "business_type": "Sole Proprietorship",
-        "primary_category": "Groceries",
+        "primary_category": "Home & Kitchen",
         "gstin": "29AABCM1234F1Z5",
         "pan_number": "AABCM1234F",
-        "fssai_license": "11223344556677",
+        "fssai_license": "",
         "city_code": "BLR",
         "shop_address": "No. 42, 12th Main Road, Indiranagar, Bengaluru",
         "pincode": "560038",
         "pickup_slot": "Morning (9:00 AM – 1:00 PM)",
-        "bank_account_holder": "Malnad Roasters",
+        "bank_account_holder": "Malnad Woodcraft",
         "bank_account_number": "50200012345678",
         "bank_ifsc": "HDFC0000184",
-        "upi_id": "malnadroasters@okhdfcbank",
-        "shop_description": "Specialty Chikmagalur single-estate Arabica coffee roastery and Kodagu spices.",
+        "upi_id": "malnadcraft@okhdfcbank",
+        "shop_description": "Heritage Channapatna lacquerware, Mysore rosewood brass inlay carvings, and sandalwood keepsakes.",
         "status": "VERIFIED",
     },
     {
@@ -148,12 +148,12 @@ SKU_TO_SHOP_CODE = {
     "BK-FSH-003": "SHP-PNQ309",
     "BK-FSH-004": "SHP-PNQ309",
     "BK-FSH-005": "SHP-PNQ309",
-    # Groceries -> Malnad Roasters & Estate Co. (BLR)
-    "BK-GRO-001": "SHP-BLR101",
-    "BK-GRO-002": "SHP-BLR101",
-    "BK-GRO-003": "SHP-BLR101",
-    "BK-GRO-004": "SHP-BLR101",
-    "BK-GRO-005": "SHP-BLR101",
+    # Artisan Crafts / Woodwork -> Malnad Craft & Woodwork Co. (BLR)
+    "BK-WDC-001": "SHP-BLR101",
+    "BK-WDC-002": "SHP-BLR101",
+    "BK-WDC-003": "SHP-BLR101",
+    "BK-WDC-004": "SHP-BLR101",
+    "BK-WDC-005": "SHP-BLR101",
     # Personal Care -> Aranya Botanical Apothecary (IXE)
     "BK-PRC-001": "SHP-IXE401",
     "BK-PRC-002": "SHP-IXE401",
@@ -181,11 +181,11 @@ PRODUCTS = [
     {"sku": "BK-FSH-004", "name": "Kolhapuri Handcrafted Leather Sandals", "brand": "Dakshina Leatherworks", "category": "Fashion", "description": "Traditional braided vegetable-tanned leather sandals with cushioned footbed for all-day comfort.", "price": Decimal("899.00"), "mrp": Decimal("1299.00"), "rating": Decimal("4.62"), "is_featured": False, "stock": {"BLR": 12, "BOM": 15, "PNQ": 14, "IXE": 7}},
     {"sku": "BK-FSH-005", "name": "Minimalist RFID-Protected Bi-Fold Wallet", "brand": "Dakshina Leatherworks", "category": "Fashion", "description": "Slim full-grain leather wallet with 6 card slots, currency divider, and hidden coin pocket.", "price": Decimal("599.00"), "mrp": Decimal("899.00"), "rating": Decimal("4.78"), "is_featured": False, "stock": {"BLR": 24, "BOM": 19, "PNQ": 15, "IXE": 13}},
 
-    {"sku": "BK-GRO-001", "name": "Chikmagalur Single-Estate Arabica (250g)", "brand": "Malnad Roasters", "category": "Groceries", "description": "Shade-grown AA specialty coffee harvested at 4,200 ft, medium-dark roasted with dark chocolate and almond notes.", "price": Decimal("399.00"), "mrp": Decimal("525.00"), "rating": Decimal("4.92"), "is_featured": True, "stock": {"BLR": 30, "BOM": 22, "PNQ": 18, "IXE": 25}},
-    {"sku": "BK-GRO-002", "name": "Coorg Wildflower Raw Forest Honey (500g)", "brand": "Kodagu Naturals", "category": "Groceries", "description": "Unprocessed, cold-extracted multifloral forest honey rich in natural pollen, enzymes, and antioxidants.", "price": Decimal("349.00"), "mrp": Decimal("475.00"), "rating": Decimal("4.80"), "is_featured": False, "stock": {"BLR": 24, "BOM": 18, "PNQ": 14, "IXE": 20}},
-    {"sku": "BK-GRO-003", "name": "Assam Orthodox Golden Tips Masala Chai (250g)", "brand": "Nilgiri & Co.", "category": "Groceries", "description": "Whole-leaf second flush Assam tea blended with crushed green cardamom, ginger, clove, and cinnamon.", "price": Decimal("279.00"), "mrp": Decimal("360.00"), "rating": Decimal("4.84"), "is_featured": False, "stock": {"BLR": 28, "BOM": 25, "PNQ": 19, "IXE": 21}},
-    {"sku": "BK-GRO-004", "name": "Malabar Tellicherry Black Peppercorns (200g)", "brand": "Kodagu Naturals", "category": "Groceries", "description": "Bold, sun-dried extra-large single-origin peppercorns with high piperine aroma.", "price": Decimal("249.00"), "mrp": Decimal("340.00"), "rating": Decimal("4.76"), "is_featured": False, "stock": {"BLR": 20, "BOM": 17, "PNQ": 13, "IXE": 22}},
-    {"sku": "BK-GRO-005", "name": "A2 Gir Cow Cultured Bilona Ghee (500ml)", "brand": "Amrit Farms", "category": "Groceries", "description": "Traditional slow-simmered curd-churned golden ghee packed in a reusable glass jar.", "price": Decimal("699.00"), "mrp": Decimal("850.00"), "rating": Decimal("4.89"), "is_featured": False, "stock": {"BLR": 16, "BOM": 14, "PNQ": 11, "IXE": 12}},
+    {"sku": "BK-WDC-001", "name": "Handcrafted Channapatna Lacquer Wooden Toy Set", "brand": "Malnad Woodcraft", "category": "Home & Kitchen", "description": "Vegetable-dyed non-toxic turned Wrightia tinctoria wooden figurine set handcrafted by master artisans in Channapatna.", "price": Decimal("799.00"), "mrp": Decimal("1199.00"), "rating": Decimal("4.88"), "is_featured": True, "stock": {"BLR": 30, "BOM": 22, "PNQ": 18, "IXE": 25}},
+    {"sku": "BK-WDC-002", "name": "Mysore Pure Rosewood Brass-Inlay Coaster Set (6 Pc)", "brand": "Malnad Woodcraft", "category": "Home & Kitchen", "description": "Hand-burnished seasoned dark rosewood drink coasters with traditional floral solid brass inlay detailing.", "price": Decimal("649.00"), "mrp": Decimal("950.00"), "rating": Decimal("4.82"), "is_featured": False, "stock": {"BLR": 24, "BOM": 18, "PNQ": 14, "IXE": 20}},
+    {"sku": "BK-WDC-003", "name": "Hand-Carved Sandalwood Fragrant Jali Keepsake Box", "brand": "Malnad Woodcraft", "category": "Home & Kitchen", "description": "Intricate openwork jali carving crafted from authentic fragrant sandalwood for jewelry and treasured keepsakes.", "price": Decimal("1299.00"), "mrp": Decimal("1850.00"), "rating": Decimal("4.92"), "is_featured": True, "stock": {"BLR": 28, "BOM": 25, "PNQ": 19, "IXE": 21}},
+    {"sku": "BK-WDC-004", "name": "Solid Sheesham Wooden Wall Clock with Roman Numerals", "brand": "Malnad Woodcraft", "category": "Home & Kitchen", "description": "Natural grain 12-inch rustic round wall clock with silent sweep Japanese quartz movement and brass hands.", "price": Decimal("1499.00"), "mrp": Decimal("2100.00"), "rating": Decimal("4.79"), "is_featured": False, "stock": {"BLR": 20, "BOM": 17, "PNQ": 13, "IXE": 22}},
+    {"sku": "BK-WDC-005", "name": "Bidriware Silver-Inlaid Metal Trinket Dish", "brand": "Malnad Woodcraft", "category": "Home & Kitchen", "description": "Certified Karnataka GI-tagged Bidriware blackened zinc-copper alloy dish hand-inlaid with 99.9% pure silver wire.", "price": Decimal("899.00"), "mrp": Decimal("1250.00"), "rating": Decimal("4.85"), "is_featured": False, "stock": {"BLR": 16, "BOM": 14, "PNQ": 11, "IXE": 12}},
 
     {"sku": "BK-PRC-001", "name": "Mysore Sandalwood & Vetiver Body Oil", "brand": "Aranya Botanicals", "category": "Personal Care", "description": "Cold-pressed sweet almond and sesame oil infused with steam-distilled sandalwood and root vetiver.", "price": Decimal("549.00"), "mrp": Decimal("750.00"), "rating": Decimal("4.88"), "is_featured": False, "stock": {"BLR": 21, "BOM": 15, "PNQ": 12, "IXE": 18}},
     {"sku": "BK-PRC-002", "name": "Kumkumadi Saffron Radiance Face Serum", "brand": "Aranya Botanicals", "category": "Personal Care", "description": "Classical Ayurvedic night elixir crafted with Kashmiri saffron, manjistha, and lotus extracts.", "price": Decimal("699.00"), "mrp": Decimal("999.00"), "rating": Decimal("4.75"), "is_featured": False, "stock": {"BLR": 14, "BOM": 11, "PNQ": 6, "IXE": 10}},
@@ -195,9 +195,9 @@ PRODUCTS = [
 ]
 
 SAMPLE_VARIANTS = {
-    "BK-GRO-001": [
-        {"variant_name": "Pack Size", "variant_value": "250g Ground", "price_adjustment": Decimal("0.00"), "stock_quantity": 20},
-        {"variant_name": "Pack Size", "variant_value": "500g Whole Bean", "price_adjustment": Decimal("350.00"), "stock_quantity": 15},
+    "BK-WDC-001": [
+        {"variant_name": "Set Type", "variant_value": "Standard 4-Piece Set", "price_adjustment": Decimal("0.00"), "stock_quantity": 20},
+        {"variant_name": "Set Type", "variant_value": "Deluxe 8-Piece Set", "price_adjustment": Decimal("400.00"), "stock_quantity": 10},
     ],
     "BK-FSH-003": [
         {"variant_name": "Size", "variant_value": "Medium (38)", "price_adjustment": Decimal("0.00"), "stock_quantity": 10},

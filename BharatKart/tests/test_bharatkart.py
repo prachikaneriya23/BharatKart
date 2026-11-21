@@ -151,10 +151,10 @@ def test_06_shop_specific_product_catalogue():
 
 def test_07_product_search():
     """7. Test product search across multiple shops."""
-    results = opensearch_manager.search_products(query="coffee", city_id=1)
+    results = opensearch_manager.search_products(query="earbuds", city_id=1)
     assert isinstance(results, list)
     assert len(results) > 0
-    assert any("coffee" in r["name"].lower() or "coffee" in r["description"].lower() for r in results)
+    assert any("earbuds" in r["name"].lower() or "earbuds" in r["description"].lower() for r in results)
 
 
 def test_08_multi_store_cart():
@@ -307,7 +307,7 @@ def test_16_opensearch_connection_and_indexing():
         "sku": "BK-TEST-9999",
         "name": "OpenSearch Test Item",
         "brand": "BharatCraft",
-        "category": "Groceries",
+        "category": "Home & Kitchen",
         "description": "Index test",
         "price": 199.0,
         "mrp": 299.0,
@@ -322,7 +322,7 @@ def test_16_opensearch_connection_and_indexing():
 def test_17_postgresql_fallback_search():
     """17. Test PostgreSQL authoritative fallback search."""
     results = opensearch_manager._search_products_postgresql(
-        query="tea",
+        query="kettle",
         city_id=1,
         shop_id=None,
         category=None,
@@ -351,7 +351,7 @@ def test_19_customer_order_privacy():
 def test_20_shopping_assistant_responses_using_real_data():
     """20. Test shopping intelligence assistant grounded in real database."""
     # Product query
-    r1 = assistant.process_message("Find Arabica coffee in Bengaluru", city_id=1)
+    r1 = assistant.process_message("Find earbuds in Bengaluru", city_id=1)
     assert r1.intent in ("product_discovery", "shop_discovery")
     assert len(r1.reply_text) > 10
 
@@ -361,7 +361,7 @@ def test_20_shopping_assistant_responses_using_real_data():
     assert len(r2.comparison_items) > 0
 
     # Multi-shop basket optimizer
-    r3 = assistant.process_message("I need coffee and kettle within ₹2,500", city_id=1)
+    r3 = assistant.process_message("I need earbuds and kettle within ₹3,500", city_id=1)
     assert r3.intent == "basket_optimizer"
     assert r3.basket_plan is not None
     assert r3.basket_plan["shop_count"] >= 1

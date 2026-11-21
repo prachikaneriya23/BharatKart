@@ -135,24 +135,57 @@ class ShoppingIntelligenceAssistant:
                 .where(Inventory.city_id == city_id)
             ).all()
 
-            query_clean = re.sub(r"\b(compare|versus|vs|between|difference|in)\b", "", query, flags=re.I).strip()
+            # Strip comparison boilerplate stopwords to isolate the target product concept
+            boilerplate = r"\b(compare|comparing|comparison|versus|vs|between|difference|in|across|from|different|distinct|local|physical|shops?|stores?|products?|items?|merchants?|retailers?|cities|city)\b"
+            cleaned_term = re.sub(boilerplate, " ", query, flags=re.I)
+            cleaned_term = re.sub(r"\s+", " ", cleaned_term).strip().lower()
+
+            # Handle common plurals (e.g. sarees -> saree, earbuds -> earbud)
+            tokens = [w.rstrip("s") if len(w) > 4 and w.endswith("s") else w for w in cleaned_term.split()]
+
             scored = []
             for prod, inv, shop in products:
-                score = fuzz.partial_ratio(query_clean.lower(), f"{prod.name} {prod.category} {prod.brand}".lower())
-                if score >= 45:
-                    scored.append((score, prod, inv, shop))
+                prod_text = f"{prod.name} {prod.category} {prod.brand} {prod.description}".lower()
+                prod_name_lower = prod.name.lower()
 
+                if tokens:
+                    # Strict semantic matching for requested items (e.g. 'saree')
+                    token_matches = sum(1 for t in tokens if t in prod_text)
+                    name_token_matches = sum(1 for t in tokens if t in prod_name_lower)
+                    if token_matches == 0:
+                        continue  # Exclude unrelated products (e.g. earbuds when searching for saree)
+
+                    score = (name_token_matches * 60) + (token_matches * 30) + fuzz.partial_ratio(cleaned_term, prod_name_lower)
+                else:
+                    # Generic "compare stores": pick top rated featured items
+                    score = float(prod.rating) * 20.0 + (10.0 if prod.is_featured else 0.0)
+
+                scored.append((score, prod, inv, shop))
+
+            # Prioritize distinct stores in comparison results
             scored.sort(key=lambda x: x[0], reverse=True)
-            top_matches = scored[:4]
+            seen_shops = set()
+            top_matches = []
+            for item in scored:
+                shop_id = item[3].id
+                if shop_id not in seen_shops or len(top_matches) < 2:
+                    seen_shops.add(shop_id)
+                    top_matches.append(item)
+                if len(top_matches) == 4:
+                    break
 
+            if not top_matches and scored:
+                top_matches = scored[:4]
+
+            item_label = cleaned_term.title() if cleaned_term else "Store"
             if not top_matches:
                 return ChatResponse(
-                    reply_text=f"I couldn't find matching products in **{city.name}** to compare for '{query}'. Try searching for terms like 'coffee', 'earbuds', or 'brass'.",
+                    reply_text=f"I couldn't find matching **{item_label}** items in **{city.name}** across stores. Try searching for terms like 'saree', 'earbuds', 'copper', or 'sandals'.",
                     intent="comparison",
                 )
 
             comparison_list = []
-            lines = [f"### ⚖️ Cross-Shop Product Comparison in {city.name}:"]
+            lines = [f"### ⚖️ Cross-Shop {item_label} Comparison in {city.name}:"]
             for _, prod, inv, shop in top_matches:
                 stock_status = f"✅ In Stock ({inv.stock_quantity} units)" if inv.stock_quantity > 0 else "❌ Out of Stock"
                 lines.append(
@@ -161,7 +194,8 @@ class ShoppingIntelligenceAssistant:
                     f"- **Price:** {format_inr(prod.price)} (MRP: {format_inr(prod.mrp)})\n"
                     f"- **Rating:** ★ {prod.rating} / 5.0\n"
                     f"- **Availability in {city.name}:** {stock_status}\n"
-                    f"- **Key Attributes:** {prod.brand} · {prod.category}"
+                    f"- **Key Attributes:** {prod.brand} · {prod.category}\n"
+                    f"- **Craft & Specs:** {prod.description[:120]}..."
                 )
                 comparison_list.append(
                     {
@@ -195,7 +229,7 @@ class ShoppingIntelligenceAssistant:
         raw_items = [part.strip() for part in re.split(r"[,;&]|\band\b", clean_text) if part.strip() and len(part.strip()) > 1]
 
         if not raw_items:
-            raw_items = ["Arabica coffee", "water bottle", "honey"]
+            raw_items = ["Paithani silk stole", "copper bottle", "leather wallet"]
 
         with get_db_session() as session:
             city = session.execute(select(City).where(City.id == city_id)).scalar_one()
@@ -350,9 +384,15 @@ class ShoppingIntelligenceAssistant:
                 )
             orders = [found]
 
-        lines = [f"Found **{len(orders)}** order(s) for **{customer_email}**:"]
+        lines = [f"Found **{len(orders)}** verified order(s) for **{customer_email}**:"]
         orders_data = []
         for o in orders[:3]:
+            item_summary = []
+            for it in o.items:
+                var_str = f" ({it.variant_info})" if it.variant_info else ""
+                store_str = f" · *{it.shop_name}*" if it.shop_name else ""
+                item_summary.append(f"  • {it.quantity} × **{it.product_name}**{var_str} — {format_inr(it.line_total)}{store_str}")
+
             sub_summary = []
             for sub in o.suborders:
                 sub_summary.append(f"  • Store: **{sub.shop_name}** — Suborder `{sub.suborder_number}`: **{sub.status}**")
@@ -362,7 +402,8 @@ class ShoppingIntelligenceAssistant:
                 f"- **Overall Status:** {o.status}\n"
                 f"- **Placed At:** {o.created_at.strftime('%d %b %Y, %I:%M %p UTC')}\n"
                 f"- **Delivery To:** {o.shipping_address} ({o.city_name})\n"
-                f"- **Shop-wise Suborders:**\n" + ("\n".join(sub_summary) if sub_summary else "  • Processing dispatch")
+                f"- **Products in this Order:**\n" + ("\n".join(item_summary) if item_summary else "  • Items processed") + "\n"
+                f"- **Shop-wise Fulfillment:**\n" + ("\n".join(sub_summary) if sub_summary else "  • Processing dispatch")
             )
             orders_data.append({"order_number": o.order_number, "status": o.status, "total": float(o.total_amount)})
 

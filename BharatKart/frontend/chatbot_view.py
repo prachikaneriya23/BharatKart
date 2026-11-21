@@ -56,11 +56,11 @@ def render_floating_chatbot(city: CityDTO) -> None:
         # Quick prompt buttons
         q1, q2, q3 = st.columns(3)
         with q1:
-            if st.button("⚖️ Compare Stores", key="float_chip_comp", use_container_width=True):
-                _submit_floating_message("Compare earbuds and electronics across shops", city.id, customer_email)
+            if st.button("⚖️ Compare Sarees", key="float_chip_comp", use_container_width=True):
+                _submit_floating_message("Compare sarees across handloom stores", city.id, customer_email)
         with q2:
             if st.button("🎯 Basket Optimizer", key="float_chip_opt", use_container_width=True):
-                _submit_floating_message("I need Arabica coffee, water bottle and honey within ₹1,500", city.id, customer_email)
+                _submit_floating_message("I need Paithani silk stole, pure copper water bottle and leather wallet within ₹3,000", city.id, customer_email)
         with q3:
             if st.button("📦 My Orders", key="float_chip_orders", use_container_width=True):
                 _submit_floating_message("Check my recent orders", city.id, customer_email)

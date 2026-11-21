@@ -123,10 +123,10 @@ class OpenSearchManager:
                 },
             }
 
-            if not self._client.indices.exists(PRODUCT_INDEX):
-                self._client.indices.create(PRODUCT_INDEX, body=product_mapping)
-            if not self._client.indices.exists(SHOP_INDEX):
-                self._client.indices.create(SHOP_INDEX, body=shop_mapping)
+            if not self._client.indices.exists(index=PRODUCT_INDEX):
+                self._client.indices.create(index=PRODUCT_INDEX, body=product_mapping)
+            if not self._client.indices.exists(index=SHOP_INDEX):
+                self._client.indices.create(index=SHOP_INDEX, body=shop_mapping)
             return True
         except Exception as exc:
             logger.error("Error creating OpenSearch indices: %s", exc)
