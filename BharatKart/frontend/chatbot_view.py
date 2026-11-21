@@ -92,7 +92,7 @@ def render_floating_chatbot(city: CityDTO) -> None:
         # Input row
         with st.form("floating_chat_form", clear_on_submit=True):
             user_msg = st.text_input("Ask assistant...", placeholder="e.g. Find leather sandals under ₹1000", label_visibility="collapsed")
-            _, f_sub, f_clear = st.columns([6.2, 1.4, 1.2])
+            _, f_sub, f_clear = st.columns([3.8, 1.2, 1.0])
             with f_sub:
                 submit = st.form_submit_button("Send", type="primary", use_container_width=True)
             with f_clear:

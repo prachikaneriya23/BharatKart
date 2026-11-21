@@ -254,42 +254,117 @@ li[aria-selected="true"] * {
     color: #FAF7F2 !important;
 }
 
-/* Buttons — never truncate text */
-.stButton > button, .stFormSubmitButton > button {
+/* ============================================================
+   BUTTONS & FORM SUBMIT BUTTONS
+   Streamlit 1.61+ uses data-testid="stBaseButton-*"
+   Ensure high-contrast, crisp visibility across all themes.
+   ============================================================ */
+[data-testid="stFormSubmitButton"],
+.stFormSubmitButton,
+[data-testid="stButton"],
+.stButton {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+}
+
+[data-testid="stFormSubmitButton"] > button,
+.stFormSubmitButton > button,
+[data-testid="stButton"] > button,
+.stButton > button,
+button[data-testid^="stBaseButton"] {
     border-radius: 7px !important;
     font-weight: 600 !important;
-    font-size: 0.84rem !important;
-    padding: 0.45rem 0.65rem !important;
+    font-size: 0.88rem !important;
+    padding: 0.45rem 0.85rem !important;
     white-space: nowrap !important;
     overflow: visible !important;
     min-height: 2.45rem !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
-.stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primary"] {
+/* Primary Buttons (Regular & Form Submit) */
+button[data-testid="stBaseButton-primary"],
+button[data-testid="stBaseButton-primaryFormSubmit"],
+button[kind="primary"],
+.stButton > button[kind="primary"],
+.stFormSubmitButton > button[kind="primary"],
+[data-testid="stFormSubmitButton"] button[type="submit"] {
     background-color: #4A192C !important;
+    background: #4A192C !important;
     color: #FAF7F2 !important;
+    -webkit-text-fill-color: #FAF7F2 !important;
     border: 1px solid #4A192C !important;
-}
-.stButton > button[kind="primary"] *, .stFormSubmitButton > button[kind="primary"] * {
-    color: #FAF7F2 !important;
-}
-.stButton > button[kind="primary"]:hover, .stFormSubmitButton > button[kind="primary"]:hover {
-    background-color: #33101E !important;
+    box-shadow: 0 2px 6px rgba(74, 25, 44, 0.25) !important;
 }
 
+/* ALL text and container elements inside Primary buttons MUST be crisp ivory/white */
+button[data-testid="stBaseButton-primary"] *,
+button[data-testid="stBaseButton-primaryFormSubmit"] *,
+button[kind="primary"] *,
+.stButton > button[kind="primary"] *,
+.stFormSubmitButton > button[kind="primary"] *,
+[data-testid="stFormSubmitButton"] button[type="submit"] *,
+button[data-testid="stBaseButton-primary"] p,
+button[data-testid="stBaseButton-primaryFormSubmit"] p,
+button[data-testid="stBaseButton-primary"] span,
+button[data-testid="stBaseButton-primaryFormSubmit"] span,
+button[data-testid="stBaseButton-primary"] div,
+button[data-testid="stBaseButton-primaryFormSubmit"] div,
+[data-testid="stFormSubmitButton"] button p,
+[data-testid="stFormSubmitButton"] button span {
+    color: #FAF7F2 !important;
+    -webkit-text-fill-color: #FAF7F2 !important;
+    fill: #FAF7F2 !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+button[data-testid="stBaseButton-primary"]:hover,
+button[data-testid="stBaseButton-primaryFormSubmit"]:hover,
+[data-testid="stFormSubmitButton"] button[type="submit"]:hover {
+    background-color: #33101E !important;
+    background: #33101E !important;
+    border-color: #33101E !important;
+}
+
+button[data-testid="stBaseButton-primary"]:hover *,
+button[data-testid="stBaseButton-primaryFormSubmit"]:hover * {
+    color: #FAF7F2 !important;
+    -webkit-text-fill-color: #FAF7F2 !important;
+}
+
+/* Secondary Buttons (Regular & Form Submit Reset/Cancel) */
+button[data-testid="stBaseButton-secondary"],
+button[data-testid="stBaseButton-secondaryFormSubmit"],
+button[kind="secondary"],
 .stButton > button:not([kind="primary"]),
 .stButton > button[kind="secondary"] {
     background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
     color: #4A192C !important;
-    border: 1px solid #D5C8B6 !important;
+    -webkit-text-fill-color: #4A192C !important;
+    border: 1.5px solid #D5C8B6 !important;
 }
-.stButton > button:not([kind="primary"]) p,
-.stButton > button[kind="secondary"] p {
+
+button[data-testid="stBaseButton-secondary"] *,
+button[data-testid="stBaseButton-secondaryFormSubmit"] *,
+button[kind="secondary"] *,
+.stButton > button:not([kind="primary"]) *,
+.stButton > button[kind="secondary"] * {
     color: #4A192C !important;
+    -webkit-text-fill-color: #4A192C !important;
+    font-weight: 600 !important;
 }
+
+button[data-testid="stBaseButton-secondary"]:hover,
+button[data-testid="stBaseButton-secondaryFormSubmit"]:hover,
 .stButton > button:not([kind="primary"]):hover,
 .stButton > button[kind="secondary"]:hover {
     background-color: #F3ECE1 !important;
+    background: #F3ECE1 !important;
     border-color: #4A192C !important;
 }
 
