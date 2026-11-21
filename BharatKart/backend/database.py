@@ -24,12 +24,17 @@ elif is_postgres:
     engine_kwargs["pool_size"] = 10
     engine_kwargs["max_overflow"] = 20
     engine_kwargs["pool_recycle"] = 300
+    engine_kwargs["connect_args"] = {"connect_timeout": 5}
 
 try:
     engine = create_engine(db_url, **engine_kwargs)
+    if is_postgres:
+        # Verify connection with fast timeout; if unreachable (e.g. offline/credentials edit), fall back cleanly to SQLite
+        with engine.connect() as conn:
+            conn.execute(text("SELECT 1"))
     logger.info("SQLAlchemy engine initialized for: %s", "PostgreSQL" if is_postgres else "SQLite")
 except Exception as exc:
-    logger.warning("Failed to create engine with configured DATABASE_URL: %s. Falling back to local SQLite.", exc)
+    logger.warning("Configured database unavailable (%s). Falling back seamlessly to local SQLite.", exc)
     db_url = "sqlite:///bharatkArt.db"
     is_sqlite = True
     is_postgres = False

@@ -75,9 +75,14 @@ class ShoppingIntelligenceAssistant:
         return self._handle_product_discovery(msg, city_id)
 
     def _extract_budget(self, text: str) -> Optional[float]:
-        match = re.search(r"(?:under|within|below|budget of|upto|up to|max)?\s*(?:₹|rs\.?|inr)?\s*(\d{2,6})", text, re.I)
+        # Match explicit budget patterns: within ₹1,500, under 2000, max ₹800, etc.
+        match = re.search(r"(?:under|within|below|budget of|upto|up to|max)\s*(?:₹|rs\.?|inr)?\s*(\d[\d,]*)", text, re.I)
+        if not match:
+            match = re.search(r"(?:₹|rs\.?|inr)\s*(\d[\d,]*)", text, re.I)
         if match:
-            return float(match.group(1))
+            clean_num = match.group(1).replace(",", "")
+            if clean_num:
+                return float(clean_num)
         return None
 
     def _handle_shop_discovery(self, query: str, city_id: int) -> ChatResponse:
@@ -181,40 +186,56 @@ class ShoppingIntelligenceAssistant:
         """Smart Multi-Shop Basket Optimizer:
 
         Finds best product combination fulfilling a list across local stores within budget,
-        prioritizing minimal shop count to reduce separate dispatches.
+        supporting multi-store fulfillment with accurate semantic product matching.
         """
         budget = self._extract_budget(query)
 
         # Parse required items from list
-        clean_text = re.sub(r"(?:i need|i want|shopping list|basket|within|under|below|for|budget of|₹|\d+)", "", query, flags=re.I)
-        raw_items = [part.strip() for part in re.split(r"[,;&]|\band\b", clean_text) if part.strip()]
+        clean_text = re.sub(r"(?:i need|i want|shopping list|basket|within|under|below|for|budget of|₹|\d[\d,]*)", "", query, flags=re.I)
+        raw_items = [part.strip() for part in re.split(r"[,;&]|\band\b", clean_text) if part.strip() and len(part.strip()) > 1]
 
         if not raw_items:
-            raw_items = ["coffee", "earbuds"]
+            raw_items = ["Arabica coffee", "water bottle", "honey"]
 
         with get_db_session() as session:
             city = session.execute(select(City).where(City.id == city_id)).scalar_one()
+
+            all_prods = session.execute(
+                select(Product, Inventory, Shop)
+                .join(Inventory, Inventory.product_id == Product.id)
+                .join(Shop, Shop.id == Product.shop_id)
+                .where(Inventory.city_id == city_id, Inventory.stock_quantity > 0)
+            ).all()
 
             candidates_per_item: List[List[Tuple[Product, Inventory, Shop]]] = []
             unmatched_items = []
 
             for item_name in raw_items:
-                all_prods = session.execute(
-                    select(Product, Inventory, Shop)
-                    .join(Inventory, Inventory.product_id == Product.id)
-                    .join(Shop, Shop.id == Product.shop_id)
-                    .where(Inventory.city_id == city_id, Inventory.stock_quantity > 0)
-                ).all()
+                item_lower = item_name.lower().strip()
+                item_words = item_lower.split()
 
-                matches = []
+                scored_matches: List[Tuple[float, Tuple[Product, Inventory, Shop]]] = []
                 for p, inv, s in all_prods:
-                    score = fuzz.partial_ratio(item_name.lower(), f"{p.name} {p.category} {p.brand} {p.description}".lower())
-                    if score >= 55:
-                        matches.append((p, inv, s))
+                    target_text = f"{p.name} {p.category} {p.brand} {p.description}".lower()
+                    name_score = fuzz.token_set_ratio(item_lower, p.name.lower())
+                    desc_score = fuzz.token_set_ratio(item_lower, target_text)
+                    score = (name_score * 0.7) + (desc_score * 0.3)
 
-                if matches:
-                    matches.sort(key=lambda x: x[0].price)
-                    candidates_per_item.append(matches[:3])
+                    # Exact word containment in product name gives top priority
+                    if all(w in p.name.lower() for w in item_words):
+                        score = max(score, 98.0)
+                    elif all(w in target_text for w in item_words):
+                        score = max(score, 85.0)
+
+                    if score >= 65.0:
+                        scored_matches.append((score, (p, inv, s)))
+
+                if scored_matches:
+                    # Sort candidates by relevance score DESC, then lowest price ASC
+                    scored_matches.sort(key=lambda x: (-x[0], x[1][0].price))
+                    top_score = scored_matches[0][0]
+                    # Keep close contenders within 10 points of top score, up to 3 candidates
+                    candidates_per_item.append([match[1] for match in scored_matches if match[0] >= top_score - 10][:3])
                 else:
                     unmatched_items.append(item_name)
 
@@ -226,21 +247,29 @@ class ShoppingIntelligenceAssistant:
 
             # Generate all Cartesian combinations of one product per item
             all_combos = list(itertools.product(*candidates_per_item))
-            scored_plans = []
 
-            for combo in all_combos:
+            # Filter out combinations that pick the same product twice for different items (if multiple items requested)
+            if len(candidates_per_item) > 1:
+                valid_combos = [c for c in all_combos if len(set(p.id for p, inv, s in c)) == len(c)]
+                if not valid_combos:
+                    valid_combos = all_combos
+            else:
+                valid_combos = all_combos
+
+            scored_plans = []
+            for combo in valid_combos:
                 total_cost = sum(Decimal(p.price) for p, inv, s in combo)
                 unique_shops = set(s.id for p, inv, s in combo)
                 shop_count = len(unique_shops)
 
-                # Penalty: higher shop count, exceeding budget
+                # Budget penalty if over budget
                 if budget is not None and total_cost > Decimal(str(budget)):
-                    budget_penalty = float(total_cost - Decimal(str(budget))) * 2.0
+                    budget_penalty = float(total_cost - Decimal(str(budget))) * 3.0
                 else:
                     budget_penalty = 0.0
 
-                # Score: prefer fewer shops and lowest cost
-                score = float(total_cost) + (shop_count * 150.0) + budget_penalty
+                # Multi-store synergy: minor per-shop overhead, priority on staying in budget
+                score = float(total_cost) + (shop_count * 20.0) + budget_penalty
                 scored_plans.append((score, total_cost, shop_count, combo))
 
             scored_plans.sort(key=lambda x: x[0])
@@ -253,7 +282,7 @@ class ShoppingIntelligenceAssistant:
                 f"### 🎯 Smart Multi-Shop Basket Recommendation ({city.name}):\n"
                 f"• **Optimized Total:** {format_inr(best_total)}"
                 f"{f' *(Within budget of {format_inr(budget)})*' if budget and best_total <= Decimal(str(budget)) else ''}\n"
-                f"• **Fulfilled By:** {best_shop_count} local partner store(s) *(minimized dispatches)*"
+                f"• **Fulfilled By:** {best_shop_count} local physical partner store(s) *(unified checkout)*"
             ]
 
             shop_grouping: Dict[str, List[str]] = {}
@@ -271,13 +300,13 @@ class ShoppingIntelligenceAssistant:
                 shop_grouping.setdefault(shop.shop_name, []).append(f"{prod.name} ({format_inr(prod.price)})")
 
             for s_name, item_strs in shop_grouping.items():
-                breakdown_lines.append(f"**From {s_name}:**\n" + "\n".join(f"  - {it}" for it in item_strs))
+                breakdown_lines.append(f"**From Store: {s_name}:**\n" + "\n".join(f"  - {it}" for it in item_strs))
 
             if unmatched_items:
                 breakdown_lines.append(f"⚠️ *Could not locate local in-stock options for: {', '.join(unmatched_items)}.*")
 
             breakdown_lines.append(
-                "\n*You can add this entire optimized bundle directly to your shopping bag below.*"
+                "\n*You can add this entire multi-store bundle directly to your single combined shopping bag below.*"
             )
 
             plan_dict = {

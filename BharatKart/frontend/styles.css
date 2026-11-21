@@ -305,15 +305,12 @@ button[data-testid="stBaseButton-primaryFormSubmit"] *,
 button[kind="primary"] *,
 .stButton > button[kind="primary"] *,
 .stFormSubmitButton > button[kind="primary"] *,
-[data-testid="stFormSubmitButton"] button[type="submit"] *,
 button[data-testid="stBaseButton-primary"] p,
 button[data-testid="stBaseButton-primaryFormSubmit"] p,
 button[data-testid="stBaseButton-primary"] span,
 button[data-testid="stBaseButton-primaryFormSubmit"] span,
 button[data-testid="stBaseButton-primary"] div,
-button[data-testid="stBaseButton-primaryFormSubmit"] div,
-[data-testid="stFormSubmitButton"] button p,
-[data-testid="stFormSubmitButton"] button span {
+button[data-testid="stBaseButton-primaryFormSubmit"] div {
     color: #FAF7F2 !important;
     -webkit-text-fill-color: #FAF7F2 !important;
     fill: #FAF7F2 !important;
@@ -323,8 +320,7 @@ button[data-testid="stBaseButton-primaryFormSubmit"] div,
 }
 
 button[data-testid="stBaseButton-primary"]:hover,
-button[data-testid="stBaseButton-primaryFormSubmit"]:hover,
-[data-testid="stFormSubmitButton"] button[type="submit"]:hover {
+button[data-testid="stBaseButton-primaryFormSubmit"]:hover {
     background-color: #33101E !important;
     background: #33101E !important;
     border-color: #33101E !important;
@@ -336,9 +332,43 @@ button[data-testid="stBaseButton-primaryFormSubmit"]:hover * {
     -webkit-text-fill-color: #FAF7F2 !important;
 }
 
-/* Secondary Buttons (Regular & Form Submit Reset/Cancel) */
+/* Secondary Buttons & Form Reset Button — Warm Terracotta / Cream Styled */
+button[data-testid="stBaseButton-secondaryFormSubmit"] {
+    background-color: #FAF7F2 !important;
+    background: #FAF7F2 !important;
+    color: #B85D3B !important;
+    -webkit-text-fill-color: #B85D3B !important;
+    border: 1.5px solid #B85D3B !important;
+    box-shadow: 0 1px 3px rgba(184, 93, 59, 0.15) !important;
+}
+
+button[data-testid="stBaseButton-secondaryFormSubmit"] *,
+button[data-testid="stBaseButton-secondaryFormSubmit"] p,
+button[data-testid="stBaseButton-secondaryFormSubmit"] span,
+button[data-testid="stBaseButton-secondaryFormSubmit"] div {
+    color: #B85D3B !important;
+    -webkit-text-fill-color: #B85D3B !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+}
+
+button[data-testid="stBaseButton-secondaryFormSubmit"]:hover {
+    background-color: #B85D3B !important;
+    background: #B85D3B !important;
+    border-color: #B85D3B !important;
+    color: #FAF7F2 !important;
+    -webkit-text-fill-color: #FAF7F2 !important;
+}
+
+button[data-testid="stBaseButton-secondaryFormSubmit"]:hover *,
+button[data-testid="stBaseButton-secondaryFormSubmit"]:hover p,
+button[data-testid="stBaseButton-secondaryFormSubmit"]:hover span {
+    color: #FAF7F2 !important;
+    -webkit-text-fill-color: #FAF7F2 !important;
+}
+
+/* Standard Secondary Navigation / Action Buttons */
 button[data-testid="stBaseButton-secondary"],
-button[data-testid="stBaseButton-secondaryFormSubmit"],
 button[kind="secondary"],
 .stButton > button:not([kind="primary"]),
 .stButton > button[kind="secondary"] {
@@ -350,7 +380,6 @@ button[kind="secondary"],
 }
 
 button[data-testid="stBaseButton-secondary"] *,
-button[data-testid="stBaseButton-secondaryFormSubmit"] *,
 button[kind="secondary"] *,
 .stButton > button:not([kind="primary"]) *,
 .stButton > button[kind="secondary"] * {
@@ -360,7 +389,6 @@ button[kind="secondary"] *,
 }
 
 button[data-testid="stBaseButton-secondary"]:hover,
-button[data-testid="stBaseButton-secondaryFormSubmit"]:hover,
 .stButton > button:not([kind="primary"]):hover,
 .stButton > button[kind="secondary"]:hover {
     background-color: #F3ECE1 !important;
