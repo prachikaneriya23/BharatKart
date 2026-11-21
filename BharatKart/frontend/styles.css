@@ -333,7 +333,9 @@ button[data-testid="stBaseButton-primaryFormSubmit"]:hover * {
 }
 
 /* Secondary Buttons & Form Reset Button — Warm Terracotta / Cream Styled */
-button[data-testid="stBaseButton-secondaryFormSubmit"] {
+button[data-testid="stBaseButton-secondaryFormSubmit"],
+.stFormSubmitButton > button:not([kind="primary"]),
+.stFormSubmitButton > button[kind="secondary"] {
     background-color: #FAF7F2 !important;
     background: #FAF7F2 !important;
     color: #B85D3B !important;
@@ -345,14 +347,18 @@ button[data-testid="stBaseButton-secondaryFormSubmit"] {
 button[data-testid="stBaseButton-secondaryFormSubmit"] *,
 button[data-testid="stBaseButton-secondaryFormSubmit"] p,
 button[data-testid="stBaseButton-secondaryFormSubmit"] span,
-button[data-testid="stBaseButton-secondaryFormSubmit"] div {
+button[data-testid="stBaseButton-secondaryFormSubmit"] div,
+.stFormSubmitButton > button:not([kind="primary"]) *,
+.stFormSubmitButton > button[kind="secondary"] * {
     color: #B85D3B !important;
     -webkit-text-fill-color: #B85D3B !important;
     font-weight: 700 !important;
     opacity: 1 !important;
 }
 
-button[data-testid="stBaseButton-secondaryFormSubmit"]:hover {
+button[data-testid="stBaseButton-secondaryFormSubmit"]:hover,
+.stFormSubmitButton > button:not([kind="primary"]):hover,
+.stFormSubmitButton > button[kind="secondary"]:hover {
     background-color: #B85D3B !important;
     background: #B85D3B !important;
     border-color: #B85D3B !important;
@@ -362,7 +368,9 @@ button[data-testid="stBaseButton-secondaryFormSubmit"]:hover {
 
 button[data-testid="stBaseButton-secondaryFormSubmit"]:hover *,
 button[data-testid="stBaseButton-secondaryFormSubmit"]:hover p,
-button[data-testid="stBaseButton-secondaryFormSubmit"]:hover span {
+button[data-testid="stBaseButton-secondaryFormSubmit"]:hover span,
+.stFormSubmitButton > button:not([kind="primary"]):hover *,
+.stFormSubmitButton > button[kind="secondary"]:hover * {
     color: #FAF7F2 !important;
     -webkit-text-fill-color: #FAF7F2 !important;
 }

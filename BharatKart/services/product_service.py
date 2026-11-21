@@ -31,8 +31,13 @@ def _to_product_dto(
         discount = int(round(((product.mrp - product.price) / product.mrp) * 100))
 
     img = product.image_url or ""
-    if not img.startswith("https://"):
-        img = get_product_photo_url(product.sku)
+    if (
+        not img.startswith("https://")
+        or "photo-1544787219-7f47ccb76574" in img
+        or "photo-1514432324607-a09d9b4aefdd" in img
+        or ("photo-1523275335684-37898b6baf30" in img and product.category != "Electronics")
+    ):
+        img = get_product_photo_url(product.sku, category=product.category, name=product.name)
 
     variant_dtos = [
         ProductVariantDTO(
@@ -115,7 +120,7 @@ def _seed_products_for_shop(session, shop_id: int) -> None:
             "mrp": Decimal("1799.00"),
             "rating": Decimal("4.90"),
             "is_featured": True,
-            "image_url": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=85",
+            "image_url": "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=85",
             "stock": 20,
             "variants": [
                 {"variant_name": "Size", "variant_value": "6-Inch Miniature", "price_adjustment": Decimal("0.00"), "stock_quantity": 12},
@@ -163,7 +168,7 @@ def _seed_products_for_shop(session, shop_id: int) -> None:
             "mrp": Decimal("950.00"),
             "rating": Decimal("4.82"),
             "is_featured": False,
-            "image_url": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=85",
+            "image_url": "https://images.unsplash.com/photo-1602928321679-560bb453f190?auto=format&fit=crop&w=800&q=85",
             "stock": 22,
             "variants": [
                 {"variant_name": "Handle", "variant_value": "Natural Sheesham", "price_adjustment": Decimal("0.00"), "stock_quantity": 14},

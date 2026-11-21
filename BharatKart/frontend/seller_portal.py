@@ -61,7 +61,7 @@ def render_auth_page(current_city: CityDTO) -> None:
             """
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.4rem;">
                 <span style="font-weight:700; color:#4A192C; font-size:0.95rem;">⚡ Instant Demo Account Quick-Login (1-Click Test Access):</span>
-                <span class="bk-stock-ok">● DEMO SEED DATA READY</span>
+                <span class="bk-stock-ok">✓ TEST ACCOUNTS ACTIVE</span>
             </div>
             """,
             unsafe_allow_html=True,
