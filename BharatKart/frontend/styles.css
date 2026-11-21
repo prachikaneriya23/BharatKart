@@ -1,0 +1,517 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-ivory: #FAF7F2;
+    --bg-card: #FFFFFF;
+    --bg-cream: #F3ECE1;
+    --plum: #4A192C;
+    --plum-dark: #33101E;
+    --terracotta: #B85D3B;
+    --gold: #C59B27;
+    --charcoal: #22201E;
+    --muted-text: #59524B;
+    --border-sand: #DFD3C3;
+}
+
+.stApp {
+    background-color: #FAF7F2 !important;
+    color: #22201E !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+header[data-testid="stHeader"] {
+    background: transparent !important;
+    height: 0px !important;
+}
+#MainMenu, footer, .stDeployButton, [data-testid="stToolbar"] {
+    display: none !important;
+}
+
+/* Eliminate Streamlit rerun fade/lag */
+[data-stale="true"], .stApp [data-testid="stVerticalBlock"] {
+    opacity: 1 !important;
+    transition: none !important;
+}
+
+.block-container {
+    padding-top: 1.1rem !important;
+    padding-bottom: 3rem !important;
+    max-width: 1320px !important;
+}
+
+/* Typography & Colors */
+h1, h2, h3 {
+    font-family: 'Playfair Display', Georgia, serif !important;
+    color: #4A192C !important;
+    letter-spacing: -0.01em !important;
+}
+
+p, li, span, div {
+    color: #22201E;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Force crisp high-contrast labels, inputs, placeholders, and dropdowns */
+label, .stTextInput label, .stTextArea label, .stSelectbox label, .stNumberInput label,
+.stCheckbox label, [data-testid="stWidgetLabel"] p, [data-testid="stWidgetLabel"] span {
+    color: #22201E !important;
+    font-weight: 600 !important;
+    font-size: 0.86rem !important;
+    opacity: 1 !important;
+}
+
+input, textarea,
+.stTextInput input, .stTextArea textarea, .stNumberInput input {
+    background-color: #FFFFFF !important;
+    color: #1F1D1B !important;
+    -webkit-text-fill-color: #1F1D1B !important;
+    border: 1.5px solid #CBBBA7 !important;
+    border-radius: 7px !important;
+    font-size: 0.92rem !important;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #7A7167 !important;
+    -webkit-text-fill-color: #7A7167 !important;
+    opacity: 1 !important;
+}
+
+/* Selectbox styling — clean single border, no clipped text */
+.stSelectbox div[data-baseweb="select"] > div {
+    background-color: #FFFFFF !important;
+    color: #1F1D1B !important;
+    border: 1.5px solid #CBBBA7 !important;
+    border-radius: 7px !important;
+    min-height: 2.5rem !important;
+    padding-right: 0.35rem !important;
+}
+.stSelectbox div[data-baseweb="select"] input {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    color: #1F1D1B !important;
+}
+.stSelectbox div[data-baseweb="select"] span,
+.stSelectbox div[data-baseweb="select"] div {
+    color: #1F1D1B !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    white-space: nowrap !important;
+    font-size: 0.88rem !important;
+}
+/* Eliminate black end-enhancer / arrow container block */
+.stSelectbox div[data-baseweb="select"] > div > div,
+.stSelectbox div[data-baseweb="select"] > div > div:last-child,
+div[data-baseweb="select"] > div > div:last-child,
+div[data-baseweb="select"] [data-testid="stSelectboxVirtualDropdown"] {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+}
+.stSelectbox div[data-baseweb="select"] svg,
+div[data-baseweb="select"] svg {
+    fill: #4A192C !important;
+    color: #4A192C !important;
+}
+/* Replace red focus ring with BharatKart warm plum */
+.stSelectbox div[data-baseweb="select"] > div:focus,
+.stSelectbox div[data-baseweb="select"] > div:focus-within,
+.stSelectbox div[data-baseweb="select"] > div[aria-expanded="true"],
+div[data-baseweb="select"] > div:focus,
+div[data-baseweb="select"] > div:focus-within {
+    border-color: #4A192C !important;
+    box-shadow: 0 0 0 1px #4A192C !important;
+    outline: none !important;
+}
+
+/* ============================================================
+   DROPDOWN PORTAL — Streamlit renders select menus in a
+   body-level portal (outside .stApp), so we must target
+   body, html, and [data-portal] directly.
+   ============================================================ */
+body, html {
+    background-color: #FAF7F2 !important;
+    color: #22201E !important;
+}
+
+/* Target the portal overlay wrapper Streamlit creates */
+body > div[data-portal="true"],
+body > div[data-portal],
+[data-portal="true"],
+[data-portal] {
+    background: transparent !important;
+}
+
+/* The actual floating card/popover */
+[data-baseweb="popover"],
+[data-baseweb="popover"] > div,
+[data-baseweb="popover"] > div > div {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    color: #22201E !important;
+    border: 1.5px solid #DFD3C3 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 30px rgba(74, 25, 44, 0.15) !important;
+}
+
+/* Menu list container */
+[data-baseweb="menu"],
+ul[data-baseweb="menu"],
+ul[role="listbox"],
+[data-baseweb="popover"] ul,
+div[data-baseweb="menu"] {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    color: #22201E !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 4px 0 !important;
+}
+
+/* Every list item */
+[data-baseweb="menu"] li,
+ul[data-baseweb="menu"] li,
+ul[role="listbox"] li,
+li[role="option"],
+li[data-baseweb="menu-item"],
+[data-baseweb="popover"] li,
+[data-baseweb="list-item"] {
+    background-color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    color: #22201E !important;
+    font-weight: 500 !important;
+    font-size: 0.9rem !important;
+    padding: 0.5rem 0.85rem !important;
+    transition: background-color 0.12s ease !important;
+}
+
+/* All children inside list items */
+[data-baseweb="menu"] li *,
+ul[data-baseweb="menu"] li *,
+ul[role="listbox"] li *,
+li[role="option"] *,
+li[data-baseweb="menu-item"] *,
+[data-baseweb="popover"] li * {
+    color: #22201E !important;
+    background: transparent !important;
+    -webkit-text-fill-color: #22201E !important;
+}
+
+/* Hover & selected states */
+[data-baseweb="menu"] li:hover,
+ul[data-baseweb="menu"] li:hover,
+ul[role="listbox"] li:hover,
+li[role="option"]:hover,
+li[data-baseweb="menu-item"]:hover,
+[data-baseweb="popover"] li:hover,
+[data-baseweb="menu"] li[aria-selected="true"],
+ul[data-baseweb="menu"] li[aria-selected="true"],
+ul[role="listbox"] li[aria-selected="true"],
+li[role="option"][aria-selected="true"],
+[data-baseweb="popover"] li[aria-selected="true"] {
+    background-color: #F3ECE1 !important;
+    background: #F3ECE1 !important;
+    color: #4A192C !important;
+    font-weight: 700 !important;
+}
+
+[data-baseweb="menu"] li:hover *,
+ul[data-baseweb="menu"] li:hover *,
+ul[role="listbox"] li:hover *,
+li[role="option"]:hover *,
+li[aria-selected="true"] * {
+    color: #4A192C !important;
+}
+
+/* Metrics visibility */
+[data-testid="stMetricLabel"] p, [data-testid="stMetricLabel"] {
+    color: #59524B !important;
+    font-weight: 600 !important;
+}
+[data-testid="stMetricValue"] div, [data-testid="stMetricValue"] {
+    color: #4A192C !important;
+    font-family: 'Playfair Display', serif !important;
+    font-weight: 700 !important;
+}
+
+/* Tabs visibility */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 0.5rem;
+    border-bottom: 1.5px solid #DFD3C3;
+}
+.stTabs [data-baseweb="tab"] {
+    background-color: #F3ECE1 !important;
+    color: #4A192C !important;
+    border-radius: 7px 7px 0 0 !important;
+    padding: 0.55rem 1.1rem !important;
+    font-weight: 600 !important;
+}
+.stTabs [aria-selected="true"] {
+    background-color: #4A192C !important;
+    color: #FAF7F2 !important;
+}
+.stTabs [aria-selected="true"] p, .stTabs [aria-selected="true"] span {
+    color: #FAF7F2 !important;
+}
+
+/* Buttons — never truncate text */
+.stButton > button, .stFormSubmitButton > button {
+    border-radius: 7px !important;
+    font-weight: 600 !important;
+    font-size: 0.84rem !important;
+    padding: 0.45rem 0.65rem !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    min-height: 2.45rem !important;
+}
+
+.stButton > button[kind="primary"], .stFormSubmitButton > button[kind="primary"] {
+    background-color: #4A192C !important;
+    color: #FAF7F2 !important;
+    border: 1px solid #4A192C !important;
+}
+.stButton > button[kind="primary"] *, .stFormSubmitButton > button[kind="primary"] * {
+    color: #FAF7F2 !important;
+}
+.stButton > button[kind="primary"]:hover, .stFormSubmitButton > button[kind="primary"]:hover {
+    background-color: #33101E !important;
+}
+
+.stButton > button:not([kind="primary"]),
+.stButton > button[kind="secondary"] {
+    background-color: #FFFFFF !important;
+    color: #4A192C !important;
+    border: 1px solid #D5C8B6 !important;
+}
+.stButton > button:not([kind="primary"]) p,
+.stButton > button[kind="secondary"] p {
+    color: #4A192C !important;
+}
+.stButton > button:not([kind="primary"]):hover,
+.stButton > button[kind="secondary"]:hover {
+    background-color: #F3ECE1 !important;
+    border-color: #4A192C !important;
+}
+
+/* Topbar & Hero */
+.bk-topbar {
+    background-color: #4A192C;
+    color: #FAF7F2 !important;
+    padding: 0.6rem 1.3rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.83rem;
+    border-bottom: 2px solid #C59B27;
+}
+.bk-topbar span, .bk-topbar strong {
+    color: #FAF7F2 !important;
+}
+
+.bk-brand-mark {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: #4A192C !important;
+    line-height: 1.1;
+}
+.bk-brand-sub {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #B85D3B !important;
+    font-weight: 700;
+}
+
+.bk-hero {
+    background: linear-gradient(135deg, #4A192C 0%, #33101E 100%);
+    padding: 2.1rem 2.4rem;
+    border-radius: 12px;
+    border: 1px solid #C59B27;
+    margin: 0.6rem 0 1.5rem 0;
+}
+.bk-hero-eyebrow {
+    color: #C59B27 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-bottom: 0.45rem;
+}
+.bk-hero-title {
+    font-family: 'Playfair Display', serif !important;
+    color: #FAF7F2 !important;
+    font-size: 2.15rem;
+    font-weight: 700;
+    line-height: 1.18;
+    margin-bottom: 0.6rem;
+}
+.bk-hero-desc, .bk-hero-desc strong {
+    color: #EFE8DE !important;
+    font-size: 0.98rem;
+    max-width: 720px;
+    line-height: 1.55;
+}
+
+/* Product Card */
+.bk-card {
+    background-color: #FFFFFF;
+    border: 1px solid #DFD3C3;
+    border-radius: 10px;
+    padding: 0.85rem;
+    margin-bottom: 0.55rem;
+    box-shadow: 0 2px 8px rgba(34, 32, 30, 0.04);
+}
+.bk-card-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 195px;
+    border-radius: 7px;
+    overflow: hidden;
+    background-color: #F3ECE1;
+    margin-bottom: 0.7rem;
+}
+.bk-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.25s ease;
+}
+.bk-card:hover .bk-card-img {
+    transform: scale(1.03);
+}
+.bk-card-brand {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #B85D3B !important;
+    font-weight: 700;
+}
+.bk-card-title {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.03rem;
+    font-weight: 700;
+    color: #22201E !important;
+    margin: 0.25rem 0 0.45rem 0;
+    min-height: 2.6rem;
+    line-height: 1.3;
+}
+.bk-price-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.35rem;
+}
+.bk-price {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: #4A192C !important;
+}
+.bk-mrp {
+    font-size: 0.82rem;
+    color: #6B635B !important;
+    text-decoration: line-through;
+}
+.bk-discount {
+    font-size: 0.73rem;
+    font-weight: 700;
+    color: #B85D3B !important;
+    background-color: #FBECE6;
+    padding: 0.12rem 0.42rem;
+    border-radius: 4px;
+}
+.bk-stock-ok {
+    font-size: 0.78rem;
+    color: #1B5E20 !important;
+    font-weight: 600;
+}
+.bk-stock-low {
+    font-size: 0.78rem;
+    color: #B85D3B !important;
+    font-weight: 700;
+}
+.bk-stock-out {
+    font-size: 0.78rem;
+    color: #9B2226 !important;
+    font-weight: 700;
+}
+
+.bk-panel {
+    background-color: #FFFFFF;
+    border: 1px solid #DFD3C3;
+    border-radius: 10px;
+    padding: 1.25rem 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.bk-step-badge {
+    display: inline-block;
+    background-color: #4A192C;
+    color: #FAF7F2 !important;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.28rem 0.7rem;
+    border-radius: 5px;
+    border-left: 3px solid #C59B27;
+    margin-bottom: 0.65rem;
+}
+
+.bk-footer {
+    margin-top: 3.5rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid #DFD3C3;
+    color: #59524B !important;
+    font-size: 0.83rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Floating Chatbot Widget */
+.bk-floating-chat-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 28px;
+    z-index: 9999;
+    box-shadow: 0 4px 16px rgba(74, 25, 44, 0.28);
+}
+
+.bk-chat-panel {
+    background-color: #FFFFFF;
+    border: 1px solid #DFD3C3;
+    border-radius: 12px;
+    box-shadow: 0 10px 32px rgba(74, 25, 44, 0.22);
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.bk-chat-header {
+    background: linear-gradient(135deg, #4A192C 0%, #33101E 100%);
+    color: #FAF7F2;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bk-chat-header h4 {
+    margin: 0;
+    color: #FAF7F2 !important;
+    font-size: 1rem;
+    font-family: 'Playfair Display', serif !important;
+}
+
+.bk-chat-sub {
+    font-size: 0.74rem;
+    color: #DFD3C3;
+}
+
