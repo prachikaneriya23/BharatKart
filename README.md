@@ -2,6 +2,8 @@
 
 **One marketplace. Multiple local stores. One seamless shopping experience.**
 
+Try BharatKart here: https://bharatkart-marketplace.streamlit.app/
+
 BharatKart is a hyperlocal e-commerce platform designed to connect customers with nearby physical retail stores. It brings multiple local shops into one digital marketplace, allowing customers to explore products, compare prices, manage a combined shopping cart, and place orders conveniently.
 
 The platform also provides dedicated seller and administrative workflows to support local businesses and marketplace operations.
